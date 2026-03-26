@@ -1,0 +1,18 @@
+models:
+  - name: xiaomi-mimo-pro-free
+    display_name: Xiaomi MiMo V2 Pro Free
+    use: langchain_openai:ChatOpenAI
+    model: xiaomi/mimo-v2-pro:free
+    api_key: $KILO_API_KEY
+    base_url: https://api.kilo.ai/api/gateway
+    max_tokens: 8192
+    temperature: 0.7
+
+  - name: xiaomi-mimo-omni-free
+    display_name: Xiaomi MiMo V2 Omni Free
+    use: langchain_openai:ChatOpenAI
+    model: xiaomi/mimo-v2-omni:free
+    api_key: $KILO_API_KEY
+    base_url: https://api.kilo.ai/api/gateway
+    max_tokens: 8192
+    temperature: 0.7

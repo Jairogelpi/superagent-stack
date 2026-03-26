@@ -1,0 +1,61 @@
+name: superagent-stack
+
+services:
+  caddy:
+    image: caddy:2
+    container_name: superagent-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file:
+      - ../.env
+    volumes:
+      - ../gateway/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - router
+      - n8n
+
+  router:
+    image: node:22-alpine
+    container_name: superagent-router
+    restart: unless-stopped
+    working_dir: /app
+    env_file:
+      - ../.env
+    command: sh -c "npm install && npm run dev"
+    volumes:
+      - ../apps/router:/app
+      - ../knowledge/obsidian-vault-template:/knowledge
+    ports:
+      - "8080:8080"
+
+  n8n:
+    image: ${N8N_IMAGE}
+    container_name: superagent-n8n
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    environment:
+      - N8N_HOST=${N8N_HOST}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_RUNNERS_ENABLED=true
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ../workflows/n8n:/workflows
+      - ../knowledge/obsidian-vault-template:/knowledge
+    expose:
+      - "5678"
+
+volumes:
+  caddy_data:
+  caddy_config:
+  n8n_data:

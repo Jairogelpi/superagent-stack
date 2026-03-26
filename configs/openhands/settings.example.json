@@ -1,0 +1,5 @@
+{
+  "llm_model": "xiaomi/mimo-v2-pro:free",
+  "llm_base_url": "https://api.kilo.ai/api/gateway",
+  "llm_api_key_env": "KILO_API_KEY"
+}

@@ -1,0 +1,19 @@
+{$OPENCLAW_HOST} {
+	reverse_proxy {$OPENCLAW_UPSTREAM}
+}
+
+{$OPENHANDS_HOST} {
+	reverse_proxy {$OPENHANDS_UPSTREAM}
+}
+
+{$DEERFLOW_HOST} {
+	reverse_proxy {$DEERFLOW_UPSTREAM}
+}
+
+{$N8N_HOST} {
+	reverse_proxy n8n:5678
+}
+
+{$ROUTER_HOST} {
+	reverse_proxy router:8080
+}

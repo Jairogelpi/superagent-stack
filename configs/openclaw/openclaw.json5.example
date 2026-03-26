@@ -1,0 +1,9 @@
+{
+  agents: {
+    defaults: {
+      model: {
+        primary: "kilocode/kilo/auto"
+      }
+    }
+  }
+}
